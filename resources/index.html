@@ -28,13 +28,10 @@
   <main class="container resources-page">
     <h1>GRAIS Resource Hub</h1>
     <p class="lede">
-      Welcome to the GRAIS Resource Hub. Here you’ll find <strong>datasets</strong> (physical models, real observations, and GenAI simulations),
-      <strong>source code</strong>, and <strong>publications</strong> produced by the project. Each release aims to be <em>FAIR</em>—findable,
-      accessible, interoperable, and reusable—so you can reproduce results, benchmark your own methods, and build on this work responsibly.
-    </p>
+      Welcome to the GRAIS Resource Hub. Here you’ll find <strong source code> </strong> and <strong>datasets</strong> produced by 
+      the project. Each release aims to be FAIR—findable, accessible, interoperable, and reusable—so you can reproduce results, benchmark your own methods, and build on this work responsib
     <p class="muted">
-      <strong>At a glance:</strong> browse the index on the left, open any dataset section for a short overview, file checksums, a tiny CSV preview (first 5 rows), and FAIR artefacts.
-      Status chips like “Available”, “Coming soon”, or “External” indicate exactly where we are in the release process.
+      <strong>At a glance:</strong> browse the index on the left or scroll down to render any section.
     </p>
 
 
@@ -465,7 +462,7 @@
         </div>
 
         <ul class="repo-meta">
-          <li><span class="label">Languages:</span> Python (PyTorch), JAX (planned)</li>
+          <li><span class="label">Languages:</span> Python (PyTorch)</li>
           <li><span class="label">Licence:</span> MIT (TBC)</li>
           <li><span class="label">Visibility:</span> Private (opening soon)</li>
         </ul>
@@ -485,10 +482,11 @@
         <details class="repo-more">
           <summary>Planned contents</summary>
           <ul>
-            <li>Training &amp; evaluation scripts</li>
-            <li>Model architectures (physical + GenAI variants)</li>
-            <li>Data loaders and preprocessing utilities</li>
-            <li>Reproducible configs and example notebooks</li>
+            <li>Simulation scripts for GRB generation using FermiTools</li>
+            <li>Simulation scripts for GRB generation using GenAI models</li>
+            <li>Utilities for dataset labelling</li>
+            <li>End-to-end pipeline for GRB detection (preprocessing, scanning, and classification modules)</li>
+            <li>Documentation and usage tutorials</li>
           </ul>
         </details>
       </article>
@@ -649,16 +647,16 @@
         </p>
 
         <h4>Recommended dataset citation (plain text)</h4>
-        <pre class="cite">GRAIS Project (2025). GRAIS Light Curves — Physical models (4-parameters), v0.1.
-Koexai. URL: https://grais.koexai.com/resources/  Licence: CC BY 4.0.</pre>
+        <pre class="cite">GRAIS Project (2025). GRAIS - Simulation and Anomaly Detection, v0.1.
+        Koexai. URL: https://grais.koexai.com/resources/ Licence: CC BY 4.0.</pre>
 
         <h4>Dataset BibTeX (template)</h4>
         <pre class="cite">@dataset{grais_A1_v0_1_2025,
       author  = {GRAIS Project},
-      title   = {GRAIS Light Curves — Physical models (4-parameters)},
+      title   = {GRAIS — Simulation and Anomaly Detection},
       year    = {2025},
       version = {0.1},
-      url     = {https://grais.koexai.com/resources/},
+           url     = {https://astrai.koexai.com/resources/},
       license = {CC BY 4.0},
       note    = {Replace with DOI when available}
     }</pre>

@@ -1,2 +1,2 @@
-8c2c923b4d6b81fd8c9a7a0e9c0e51ca548ed6ff02b5e70d3ddee52d4caed037  light_curves.parquet
+717ef5a7a687a942c949a1ccf368760c49ca0d06d72a6de9c9faac4ea5eeeb6f  datasetA1.zip
 

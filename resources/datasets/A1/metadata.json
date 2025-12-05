@@ -1,54 +1,107 @@
 {
-  "title": "Synthetic Supernova Light Curves Dataset - 421 Days",
+  "title": "Simulated Gamma-Ray Burst Event Dataset A1",
   "creators": [
     {
-      "name": "Luca Naso",
-      "affiliation": "Koexai Srl",
-      "role": "Principal Investigator"
+      "name": "Koexai S.r.l.",
+      "affiliation": "Koexai S.r.l., Catania, Italy",
+      "role": "Data Producer"
     }
   ],
   "version": "1.0.0",
   "dates": {
-    "created": "2025-08-29",
-    "released": "2025-08-29",
-    "lastUpdated": "2025-08-29"
+    "created": "2025-11-30",
+    "released": "2025-11-30",
+    "lastUpdated": "2025-11-30"
   },
   "identifier": {
     "type": "Internal",
-    "value": "SN-LC-421D-v1.0"
+    "value": "KOEXAI-GRB-A1-v1.0"
   },
   "citation": {
-    "text": "Luca Naso. (2025). Synthetic Supernova Light Curves Dataset - 421 Days (Version 1.0.0). Koexai Srl.",
-    "bibtex": "@dataset{sn_lc_421d_2025,\n  author = {Luca Naso},\n  title = {Synthetic Supernova Light Curves Dataset - 421 Days},\n  year = {2025},\n  version = {1.0.0},\n  publisher = {Koexai Srl}\n}"
+    "text": "Koexai S.r.l. (2025). Simulated Gamma-Ray Burst Event Dataset A1 (Version 1.0.0). KOEXAI-GRB-A1-v1.0",
+    "bibtex": "@dataset{koexai_grb_a1_2025,\n  author = {Koexai S.r.l.},\n  title = {Simulated Gamma-Ray Burst Event Dataset A1},\n  year = {2025},\n  version = {1.0.0},\n  publisher = {Koexai S.r.l.},\n  identifier = {KOEXAI-GRB-A1-v1.0}\n}"
   },
-  "abstract": "This dataset contains synthetic light curves generated using semi-analytical models for supernova research. Each light curve consists of 421 daily flux measurements covering 421 consecutive days of supernova evolution. The dataset includes four corresponding physical parameters for each simulated supernova: progenitor radius, mass, explosion energy, and nickel-56 percentage. The synthetic data is designed to support machine learning applications in supernova classification and parameter estimation studies with daily cadence observations.",
-  "keywords": ["supernova", "light curves", "synthetic data", "astrophysics", "semi-analytical models", "time series", "daily observations", "stellar physics"],
-  "domain": "Astrophysics",
-  "purpose": "Supporting machine learning research in supernova classification and physical parameter estimation with daily cadence data",
+  "abstract": "This dataset contains simulated gamma-ray burst (GRB) event data generated for astrophysical research and analysis. The dataset comprises 100 HDF5 files containing approximately 171,558 individual gamma-ray detection events from simulated GRB sources. Each event includes reconstructed energy, celestial coordinates, angular parameters, timing information, and Monte Carlo truth data. The simulations represent filtered event data from gamma-ray detectors, suitable for developing and testing analysis pipelines for high-energy astrophysics research.",
+  "keywords": [
+    "gamma-ray bursts",
+    "GRB",
+    "astrophysics simulation",
+    "high-energy astrophysics",
+    "Monte Carlo",
+    "event reconstruction",
+    "HDF5",
+    "celestial coordinates",
+    "gamma-ray detection"
+  ],
+  "domain": "Astrophysics / High-Energy Physics",
+  "purpose": "This dataset is intended for developing and validating analysis methods for gamma-ray burst detection and characterization, training machine learning models for event classification, and testing data processing pipelines for high-energy astrophysics experiments.",
   "provenance": {
-    "sources": "Generated using semi-analytical supernova models",
-    "processing": "Daily temporal sampling over 421-day observation period",
-    "derivations": "Four core physical parameters derived from progenitor models"
+    "sources": "Monte Carlo simulations of gamma-ray burst events using standard astrophysical simulation frameworks",
+    "processing": "Events were generated through Monte Carlo simulations, then filtered based on quality criteria including reconstruction quality, angular separation, and energy thresholds. The filtering process removed low-quality events and retained high-confidence detections suitable for scientific analysis.",
+    "derivations": "Derived quantities include reconstructed energy (ENERGY), angular positions (RA, DEC), and event weights (WEIGHT) calculated from Monte Carlo truth information. Containment angle (CONT_ANG) represents the angular separation between reconstructed and true positions."
   },
   "structure": {
-    "formats": ["Parquet"],
-    "encoding": "UTF-8",
-    "conventions": "Time in days from explosion start (day 1 to day 421); flux values in arbitrary units; missing values coded as NaN",
-    "relationships": "light_curves.parquet and params.parquet linked by implicit row index"
+    "formats": ["HDF5"],
+    "encoding": "Binary HDF5 format with PyTables structure",
+    "conventions": "Times are in MET (Mission Elapsed Time) format as float64 Unix timestamps. Missing or invalid events are indicated by empty HDF5 groups. Coordinate systems: RA/DEC in degrees (J2000), Galactic coordinates L/B in degrees, angles in degrees.",
+    "relationships": "Each HDF5 file represents events from a single simulated GRB source. Files are independent and can be processed separately. The 'GRB' column provides the source identifier linking events to their parent simulation.",
+    "numberOfFiles": 100,
+    "totalEvents": 171558,
+    "fileNamingConvention": "GRB_Simulated_<ID>_filtered.hdf5, where ID is a unique numeric identifier"
   },
   "quality": {
-    "validation": "Model consistency checks applied; parameter ranges validated against physical constraints",
+    "validation": "Events underwent automated quality filtering based on reconstruction parameters. Files with no events passing quality cuts were retained as empty placeholders. Data integrity verified through HDF5 file validation and statistical checks on key parameters.",
     "metrics": {
-      "completeness": "100% - no missing light curves",
-      "temporal_coverage": "421 days per light curve",
-      "sampling_rate": "Daily uniform cadence"
+      "eventsPerFile": {
+        "mean": 1716,
+        "min": 0,
+        "max": 49847
+      },
+      "energyRange": "~10 GeV to ~10000 GeV",
+      "validFiles": 91,
+      "emptyFiles": 9
     },
     "limitations": [
-      "Semi-analytical models may not capture all physical complexity",
-      "Parameter space limited to four core progenitor properties",
-      "No observational noise included in synthetic data",
-      "Daily sampling may miss rapid variability features"
+      "Some simulated GRBs produced no events passing quality filters, resulting in 9 empty files",
+      "Event statistics vary significantly between simulations due to different source parameters and observing conditions",
+      "Simulated data may not fully capture all systematic uncertainties present in real observations",
+      "Coordinate precision limited by reconstruction algorithms used in simulation",
+      "No instrumental background events are included in this filtered dataset"
     ],
-    "usageGuidance": "Suitable for algorithm development with daily cadence data; not recommended for direct comparison with observational data without noise modeling"
+    "usageGuidance": "This dataset is recommended for algorithm development, pipeline testing, and machine learning training. It should not be used for direct comparison with real observational data without accounting for differences in background, systematic effects, and detector response. Files with few events (<10) should be treated with caution for statistical analyses."
+  },
+  "access": {
+    "licence": "CC-BY-4.0",
+    "reuseGuidance": "Users must cite this dataset when using it in publications or derivative works. Commercial use is permitted. Modified versions should clearly indicate changes from the original dataset.",
+    "contact": {
+      "name": "Koexai S.r.l.",
+      "email": "info@koexai.com",
+      "role": "Dataset maintainer"
+    },
+    "projectLink": "https://www.koexai.com"
+  },
+  "dataTypes": {
+    "ENERGY": "Reconstructed photon energy in GeV",
+    "RA": "Right Ascension in degrees (J2000)",
+    "DEC": "Declination in degrees (J2000)",
+    "L": "Galactic longitude in degrees",
+    "B": "Galactic latitude in degrees",
+    "THETA": "Off-axis angle in degrees",
+    "PHI": "Azimuthal angle in degrees",
+    "ZENITH_ANGLE": "Zenith angle of observation in degrees",
+    "EARTH_AZIMUTH_ANGLE": "Earth azimuth angle in degrees",
+    "TIME": "Event time in Mission Elapsed Time (MET) seconds",
+    "EVENT_ID": "Unique event identifier",
+    "RUN_ID": "Simulation run identifier",
+    "RECON_VERSION": "Reconstruction algorithm version",
+    "CONVERSION_TYPE": "Photon conversion type (pair production)",
+    "LIVETIME": "Effective observation livetime in seconds",
+    "MC_SRC_ID": "Monte Carlo source identifier",
+    "MCENERGY": "True (Monte Carlo) photon energy in GeV",
+    "CONT_ANG": "Containment angle between reconstructed and true position in degrees",
+    "WEIGHT": "Event statistical weight",
+    "GTI": "Good Time Interval flag",
+    "probability": "Event quality probability",
+    "GRB": "Source identifier string"
   }
 }

@@ -1,183 +1,280 @@
-# Synthetic Supernova Light Curves Dataset - 421 Days (Version 1.0.0)
+# Simulated Gamma-Ray Burst Event Dataset A1 (Version 1.0.0)
 
 ## Summary
 
-This dataset contains synthetic light curves generated using semi-analytical models for supernova research. Each light curve consists of 421 daily flux measurements covering 421 consecutive days of supernova evolution. The dataset includes four corresponding physical parameters for each simulated supernova: progenitor radius, mass, explosion energy, and nickel-56 percentage. The dataset is designed to support machine learning applications in supernova classification and physical parameter estimation with daily cadence observations.
+This dataset contains simulated gamma-ray burst (GRB) event data generated for astrophysical research and analysis. The collection includes 100 HDF5 files with approximately 171,558 individual gamma-ray detection events from simulated GRB sources. Each event provides comprehensive information including reconstructed energy, celestial coordinates, angular parameters, timing information, and Monte Carlo truth data.
+
+The simulations represent filtered event data from gamma-ray detectors, suitable for developing and testing analysis pipelines, training machine learning models, and validating analysis methods for high-energy astrophysics research.
 
 ## Contents
 
 ```
-datasets/A1/
-├── light_curves.parquet     # Time series data (N × 421 days)
-├── params.parquet          # Physical parameters (N × 4 parameters)
-├── metadata.json           # Machine-readable metadata
-├── README.md              # This file
-└── data_dictionary.csv    # Variable definitions
+datasetA1/
+├── GRB_Simulated_1_filtered.hdf5
+├── GRB_Simulated_2_filtered.hdf5
+├── ...
+├── GRB_Simulated_9525_filtered.hdf5
+└── (100 HDF5 files total)
 ```
 
-### File Descriptions
-
-- **light_curves.parquet**: Contains synthetic supernova light curves with 421 daily measurements each
-- **params.parquet**: Corresponding physical parameters for each light curve (4 parameters per supernova)
-- **data_dictionary.csv**: Detailed descriptions of all variables in both files
+**Dataset Statistics:**
+- Total files: 100
+- Valid files with events: 91
+- Empty files (no events passing filters): 9
+- Total events: 171,558
+- Events per file: ranges from 0 to 49,847 (mean: ~1,716)
 
 ## Quick Start
 
-### Loading the Data
+### Reading the Data
+
+The dataset uses HDF5 format and can be read using Python with pandas and h5py:
 
 ```python
 import pandas as pd
-import pyarrow.parquet as pq
 
-# Load light curves
-light_curves = pd.read_parquet('light_curves.parquet')
-print(f"Light curves shape: {light_curves.shape}")
+# Read a single file
+df = pd.read_hdf('GRB_Simulated_*_filtered.hdf5', 'events')
 
-# Load physical parameters  
-params = pd.read_parquet('params.parquet')
-print(f"Parameters shape: {params.shape}")
+# Display basic information
+print(df.info())
+print(df.head())
 
-# Each row corresponds to one supernova
-# light_curves.iloc[0] contains the first light curve (421 daily points)
-# params.iloc[0] contains the corresponding physical parameters
+# Access specific columns
+energies = df['ENERGY']
+coordinates = df[['RA', 'DEC']]
 ```
 
-### Example Usage
+### Requirements
 
-```python
-import matplotlib.pyplot as plt
+- Python 3.7+
+- pandas
+- h5py
+- pytables (tables)
 
-# Plot first light curve
-days = range(1, 422)  # Day 1 to day 421
-plt.figure(figsize=(10, 6))
-plt.plot(days, light_curves.iloc[0].values)
-plt.xlabel('Days since explosion')
-plt.ylabel('Flux (arbitrary units)')
-plt.title('Example Synthetic Supernova Light Curve')
-plt.grid(True)
-plt.show()
-
-# Display corresponding parameters
-print("Physical parameters for this light curve:")
-print(f"Progenitor radius: {params.iloc[0]['radius']} solar radii")
-print(f"Progenitor mass: {params.iloc[0]['mass']} solar masses")
-print(f"Explosion energy: {params.iloc[0]['energy']} ergs")
-print(f"Nickel percentage: {params.iloc[0]['nickel']}%")
+Install dependencies:
+```bash
+pip install pandas h5py tables
 ```
 
 ## Structure and Formats
 
-### File Formats
-- **Format**: Apache Parquet (.parquet)
-- **Encoding**: UTF-8
-- **Compression**: Snappy (default Parquet compression)
+### File Format
+- **Format:** HDF5 (Hierarchical Data Format version 5)
+- **Encoding:** Binary HDF5 with PyTables structure
+- **Compression:** HDF5 internal compression
+- **Key path:** Data stored at `/events` within each file
 
-### Temporal Conventions
-- **Time coverage**: 421 consecutive days from explosion start
-- **Sampling**: Daily measurements (day 1, day 2, ..., day 421)
-- **Time reference**: Day 1 corresponds to explosion start
-- **Flux units**: Arbitrary units (consistent within each model)
-- **Missing values**: Encoded as NaN
+### File Naming Convention
+Files follow the pattern `GRB_Simulated_<ID>_filtered.hdf5` where `<ID>` is a unique numeric identifier for each simulated GRB source.
 
-### Column Structure
-**light_curves.parquet**:
-- Columns: `day_1`, `day_2`, `day_3`, ..., `day_421`
-- Each column represents flux at that specific day post-explosion
+### Coordinate Systems and Units
+- **Energy:** GeV (gigaelectronvolts)
+- **Angles:** Degrees
+- **Time:** MET (Mission Elapsed Time) as Unix timestamp in seconds
+- **Coordinates:** 
+  - RA/DEC: Equatorial coordinates in degrees (J2000 epoch)
+  - L/B: Galactic coordinates in degrees
+- **Missing values:** Empty HDF5 groups indicate files with no events passing quality filters
 
-**params.parquet**:
-- `radius`: Progenitor radius (solar radii)
-- `mass`: Progenitor mass (solar masses)  
-- `energy`: Explosion energy (ergs)
-- `nickel`: Nickel-56 percentage (% of total ejecta mass)
+### Data Variables
 
-### Relationships Between Files
-- Both files have the same number of rows
-- Row indices correspond between files (row i in light_curves.parquet corresponds to row i in params.parquet)
-- No explicit key columns - relationship is implicit through row order
+Each event record contains 22 variables organized into the following categories:
+
+**Energy Information:**
+- `ENERGY`: Reconstructed photon energy (GeV)
+- `MCENERGY`: True Monte Carlo photon energy (GeV)
+
+**Spatial Coordinates:**
+- `RA`: Right Ascension (degrees, J2000)
+- `DEC`: Declination (degrees, J2000)
+- `L`: Galactic longitude (degrees)
+- `B`: Galactic latitude (degrees)
+
+**Angular Parameters:**
+- `THETA`: Off-axis angle (degrees)
+- `PHI`: Azimuthal angle (degrees)
+- `ZENITH_ANGLE`: Observation zenith angle (degrees)
+- `EARTH_AZIMUTH_ANGLE`: Earth azimuth angle (degrees)
+- `CONT_ANG`: Containment angle between reconstructed and true position (degrees)
+
+**Timing:**
+- `TIME`: Event detection time (MET seconds)
+- `LIVETIME`: Effective observation livetime (seconds)
+
+**Event Identification:**
+- `EVENT_ID`: Unique event identifier (integer)
+- `RUN_ID`: Simulation run identifier (integer)
+- `MC_SRC_ID`: Monte Carlo source identifier (integer)
+- `GRB`: Source name string (e.g., "GRB_Simulated_1")
+
+**Quality and Reconstruction:**
+- `RECON_VERSION`: Reconstruction algorithm version (integer)
+- `CONVERSION_TYPE`: Photon conversion type flag (integer)
+- `GTI`: Good Time Interval flag (1 = good, 0 = excluded)
+- `probability`: Event quality probability (integer)
+- `WEIGHT`: Statistical weight for analysis (float)
+
+For detailed variable descriptions, see the **Data Dictionary** section below.
+
+## Data Dictionary
+
+| Column | Type | Unit | Range/Values | Description |
+|--------|------|------|--------------|-------------|
+| ENERGY | float32 | GeV | >0 | Reconstructed photon energy from detector response |
+| RA | float32 | degrees | 0-360 | Right Ascension in J2000 equatorial coordinates |
+| DEC | float32 | degrees | -90 to 90 | Declination in J2000 equatorial coordinates |
+| L | float32 | degrees | 0-360 | Galactic longitude |
+| B | float32 | degrees | -90 to 90 | Galactic latitude |
+| THETA | float32 | degrees | ≥0 | Off-axis angle from pointing direction |
+| PHI | float32 | degrees | 0-360 | Azimuthal angle around pointing direction |
+| ZENITH_ANGLE | float32 | degrees | 0-180 | Zenith angle of observation (0 = overhead) |
+| EARTH_AZIMUTH_ANGLE | float32 | degrees | 0-360 | Azimuthal angle relative to Earth |
+| TIME | float64 | seconds | >0 | Event time in Mission Elapsed Time (MET) format |
+| EVENT_ID | int32 | n/a | ≥0 | Unique identifier for each event within simulation |
+| RUN_ID | int32 | n/a | ≥0 | Identifier for the simulation run |
+| RECON_VERSION | int16 | n/a | ≥0 | Version number of reconstruction algorithm used |
+| CONVERSION_TYPE | int16 | n/a | {0, 1} | Photon conversion mechanism (0=front, 1=back) |
+| LIVETIME | float64 | seconds | >0 | Effective observation time accounting for dead time |
+| MC_SRC_ID | int32 | n/a | ≥0 | Monte Carlo source identifier |
+| MCENERGY | float32 | GeV | >0 | True photon energy from Monte Carlo simulation |
+| CONT_ANG | float64 | degrees | ≥0 | Angular separation between reconstructed and true position |
+| WEIGHT | float64 | n/a | >0 | Statistical weight for combining events in analysis |
+| GTI | int64 | n/a | {0, 1} | Good Time Interval flag (1=usable, 0=excluded) |
+| probability | int64 | n/a | {0, 1} | Event quality flag (1=high quality, 0=low quality) |
+| GRB | string | n/a | "GRB_Simulated_*" | Source identifier matching filename |
 
 ## Provenance and Methods
 
 ### Data Generation
-- **Source**: Semi-analytical supernova models
-- **Generation period**: 2025
-- **Model type**: Physics-based synthetic light curve generator
-- **Parameter space**: Systematic sampling of core progenitor properties
 
-### Physical Parameters
-The four physical parameters characterize essential supernova properties:
-1. **Progenitor radius** (solar radii): Size of the pre-explosion star
-2. **Progenitor mass** (solar masses): Total mass of the progenitor
-3. **Explosion energy** (ergs): Kinetic energy imparted to the ejecta
-4. **Nickel-56 percentage** (%): Fraction of ejecta mass in radioactive nickel
+**Source:** Monte Carlo simulations of gamma-ray burst events using standard astrophysical simulation frameworks. The simulations model the detection and reconstruction of high-energy photons from transient astrophysical sources.
 
-### Processing Steps
-1. Parameter space definition and sampling for four core parameters
-2. Semi-analytical model execution for each parameter set
-3. Daily flux computation over 421-day period
-4. Quality control and validation checks
-5. Data export to Parquet format
+**Simulation Process:**
+1. Generation of primary gamma-ray photons with specified spectral and temporal characteristics
+2. Propagation through detector geometry and interaction with detector material
+3. Triggering and reconstruction of detected events
+4. Calculation of reconstructed event parameters (energy, direction, timing)
+
+### Processing and Filtering
+
+**Quality Filtering:**
+Events underwent automated quality selection based on multiple criteria:
+- Reconstruction quality metrics
+- Angular resolution requirements
+- Energy threshold cuts
+- Good Time Interval (GTI) selection
+- Event probability thresholds
+
+**Filtering Results:**
+- Input: Raw simulated events from 100 GRB simulations
+- Output: 171,558 events passing quality filters
+- Rejection: Events failing quality criteria or occurring during instrumental dead time
+- Empty files: 9 simulations produced no events meeting quality standards
+
+### Derived Quantities
+
+**Reconstructed Parameters:**
+- `ENERGY`: Calculated from detector response using energy reconstruction algorithms
+- `RA`, `DEC`, `L`, `B`: Derived from reconstructed photon direction
+- `CONT_ANG`: Computed as angular separation between reconstructed position and Monte Carlo truth
+- `WEIGHT`: Statistical weight accounting for acceptance, efficiency, and analysis cuts
+
+### Software and Versions
+
+- Simulation framework: Standard gamma-ray simulation tools
+- Reconstruction version: Indicated in `RECON_VERSION` field
+- File format: HDF5 with PyTables 2.1 format
+- Python processing: pandas, h5py, numpy
 
 ### Validation
-- Model consistency checks applied to all generated light curves
-- Parameter ranges validated against physically reasonable bounds
-- Daily sampling uniformity verified across all light curves
-- Peak times and decay rates checked for physical consistency
+
+**Quality Assurance:**
+- Automated checks on reconstruction parameters
+- Statistical validation of energy and angular distributions  
+- File integrity verification using HDF5 validation tools
+- Consistency checks between related parameters (e.g., ENERGY vs MCENERGY)
 
 ## Quality and Limitations
 
-### Dataset Quality
-- **Completeness**: 100% (no missing light curves or daily measurements)
-- **Consistency**: All light curves follow same 421-day temporal grid
-- **Coverage**: Complete 421-day observation window for all objects
+### Known Quality Issues
 
-### Known Limitations
-1. **Daily sampling**: May miss rapid variability features occurring on sub-daily timescales
-2. **Model approximations**: Semi-analytical models may not capture all physical complexity of real supernovae
-3. **Simplified parameter space**: Only four core parameters varied; other properties held constant
-4. **No observational effects**: No observational noise, instrumental effects, weather gaps, or detection limits
-5. **Limited diversity**: Parameter combinations may not cover all possible supernova subtypes
+1. **Variable Event Statistics:** The number of events varies significantly between files (0 to 49,847 events), reflecting different source parameters and observing conditions in the simulations.
+
+2. **Empty Files:** Nine files contain no events passing quality filters. These are retained as placeholders but should be skipped in analysis workflows.
+
+3. **Low-Statistics Files:** Several files contain very few events (1-2 events), which may not be suitable for statistical analyses requiring larger samples.
+
+4. **Simulation Limitations:** As simulated data, this dataset may not fully capture all systematic uncertainties and instrumental effects present in real observations.
 
 ### Recommended Usage
-- **Suitable for**: Algorithm development with daily cadence observations, method testing for survey-like data
-- **Not recommended for**: High-time-resolution studies, direct comparison with observational data without noise modeling
-- **Best practices**: Add realistic observational effects when comparing to survey data; validate methods on real observations
 
-## Data Statistics
+**Suitable for:**
+- Algorithm development and testing
+- Machine learning model training
+- Analysis pipeline validation
+- Educational purposes
+- Method comparison studies
 
-### Temporal Coverage
-- **Duration**: 421 days per light curve
-- **Sampling**: Daily cadence (24-hour intervals)
-- **Completeness**: No missing days in any light curve
+**Not recommended for:**
+- Direct comparison with observational data without systematic corrections
+- Studies requiring precise instrumental backgrounds
+- Analyses sensitive to detector systematics not included in simulations
+- Statistical studies using low-event-count files (<10 events)
 
-### Parameter Ranges
-Parameter ranges are physically motivated and span typical supernova progenitor properties:
-- **Radius**: [specific range] solar radii
-- **Mass**: [specific range] solar masses
-- **Energy**: [specific range] ergs  
-- **Nickel**: [specific range]% of ejecta mass
+### Data Quality Metrics
+
+- **Energy Range:** Approximately 10 GeV to 10,000 GeV
+- **Angular Resolution:** Represented by CONT_ANG distribution
+- **Valid Events:** All retained events have GTI=1 and probability=1
+- **Completeness:** 91 of 100 files contain events; 9 files are empty
 
 ## How to Cite
 
-### Plain Text Citation
-[Your Name]. (2025). Synthetic Supernova Light Curves Dataset - 421 Days (Version 1.0.0). Koexai Srl.
+If you use this dataset in your research, please cite it as:
 
-### BibTeX Entry
+**Plain text:**
+```
+Koexai S.r.l. (2025). Simulated Gamma-Ray Burst Event Dataset A1 (Version 1.0.0). KOEXAI-GRB-A1-v1.0
+```
+
+**BibTeX:**
 ```bibtex
-@dataset{sn_lc_421d_2025,
-  author = {[Your Name]},
-  title = {Synthetic Supernova Light Curves Dataset - 421 Days},
+@dataset{koexai_a1_2025,
+  author = {Koexai S.r.l.},
+  title = {Simulated Gamma-Ray Burst Event Dataset A1},
   year = {2025},
   version = {1.0.0},
-  publisher = {Koexai Srl},
-  note = {Synthetic supernova light curves with 421 daily measurements and 4 physical parameters}
+  publisher = {Koexai S.r.l.},
 }
 ```
 
+## License
+
+This dataset is released under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
+
+You are free to:
+- Share — copy and redistribute the material in any medium or format
+- Adapt — remix, transform, and build upon the material for any purpose, even commercially
+
+Under the following terms:
+- Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made
+
+Full license text: https://creativecommons.org/licenses/by/4.0/
+
 ## Contact
 
-- **Maintainer**: [Your Name]
-- **Email**: [your.email@koexai.com]
-- **Organization**: Koexai Srl
-- **Website**: https://koexai.com
+**Maintainer:** Koexai S.r.l.  
+**Email:** info@koexai.com  
+**Website:** https://www.koexai.com 
+**LinkedIn:** https://www.linkedin.com/company/koexai/
+**Address:** Via Josemaria Escrivá 6, Catania, Italy  
 
-For questions about the dataset, model details, or usage recommendations, please contact the maintainer.
+For questions about this dataset, analysis support, or collaboration opportunities, please contact us at the email above.
+
+## Version History
+
+- **v1.0.0** (2025-12-05): Initial release
+  - 100 simulated GRB event files
+  - 171,558 total events
+  - Filtered and validated dataset ready for research use

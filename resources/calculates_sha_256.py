@@ -8,5 +8,5 @@ def sha256_file(filepath):
             hash_sha256.update(chunk)
     return hash_sha256.hexdigest()
 
-filepath = "datasets/A1/datasetA1.zip"
+filepath = "datasets/A2/synthetic_grbs.csv"
 print(sha256_file(filepath))

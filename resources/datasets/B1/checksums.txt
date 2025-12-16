@@ -1,1 +1,1 @@
-71bcc40749043458815c6d874d7b4b2ff44d82fd77852fc1f41ae2743f3d1239  74_SNE_bolometric_real.parquet
+b656994b062fff7cccdee8922b0f904945820a8eed4e566a90fd20fb1adf68a6 candidates_final.csv

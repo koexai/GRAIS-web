@@ -9,7 +9,7 @@ The simulations represent filtered event data from gamma-ray detectors, suitable
 ## Contents
 
 ```
-datasetA1/
+dataset/A1/
 ├── GRB_Simulated_1_filtered.hdf5
 ├── GRB_Simulated_2_filtered.hdf5
 ├── ...

@@ -1,0 +1,16 @@
+Recommended dataset citation (plain text)
+
+GRAIS Project (2025). GRAIS - Simulation and Anomaly Detection, v0.1.
+Koexai. URL: https://grais.koexai.com/resources/ Licence: CC BY 4.0.
+
+Dataset BibTeX (template)
+
+@dataset{grais_A1_v0_1_2025,
+                    author  = {Koexai Srl},
+                    title   = {GRAIS — Simulation and Anomaly Detection},
+                    year    = {2025},
+                    version = {0.1},
+                    url     = {https://grais.koexai.com/resources/},
+                    license = {CC BY 4.0},
+                    note    = {Replace with DOI when available}
+                  }

@@ -106,7 +106,7 @@
         <details class="repo-more">
           <summary>Planned contents</summary>
           <ul>
-            <li>Simulation scripts for GRB generation using FermiTools</li>
+            <li>Simulation scripts for GRB generation using Fermitools</li>
             <li>Simulation scripts for GRB generation using GenAI models</li>
             <li>Utilities for dataset labelling</li>
             <li>End-to-end pipeline for GRB detection (preprocessing, scanning, and classification modules)</li>
@@ -135,10 +135,10 @@
 
         <article id="A1" class="dataset frame" aria-labelledby="A1-heading">
           <h4 id="A1-heading">A1. GRB Simulations via gtobssim</h4>
-            <p><strong>Overview</strong>: physically grounded GRB simulations generated with FermiTools’ gtobssim, reproducing instrument response, background conditions, and realistic photon-level behaviour.
-            The simulated GRBs numbered 1 to 25 have fluxes of photons between 0.07 and 0.1 m⁻² s⁻¹; the simulated GRBs numbered 501 to 525 have retaled fluxes between 0.1 and 1 m⁻² s⁻¹; the simulated GRBs numbered 2501 to 2525 have fluxes of photons between 1 and 10 m⁻² s⁻¹; the simulated GRBs numbered 9501 to 10000 have fluxes between 10 and 50 m⁻² s⁻¹.
+            <p><strong>Overview</strong>: physically grounded GRB simulations generated with Fermitools’ gtobssim, reproducing instrument response, background conditions, and realistic photon-level behaviour.
+            The simulated GRBs numbered 1 to 500 have fluxes of photons between 0.07 and 0.1 m⁻² s⁻¹; the simulated GRBs numbered 501 to 2500 have retaled fluxes between 0.1 and 1 m⁻² s⁻¹; the simulated GRBs numbered 2501 to 9500 have fluxes of photons between 1 and 10 m⁻² s⁻¹; the simulated GRBs numbered 9501 to 10000 have fluxes between 10 and 50 m⁻² s⁻¹.
             You'll find a small part of dataset. </p>
-            <p class="muted">Intended use: designed for validating the pipeline against fully controlled, physics-accurate scenarios and for benchmarking sensitivity to faint or short-duration transients.</p>
+            <p class="muted">Intended use: designed for validating the pipeline against fully controlled, physics-accurate scenarios and for training of the anomaly detection pipeline.</p>
           <h5 class="visually-hidden">Primary files</h5>
             <div class="file-strip" aria-label="Primary files">
               <div class="file-item">
@@ -224,7 +224,7 @@
         <article id="A2" class="dataset frame" aria-labelledby="A2-heading">
           <h4 id="A2-heading">A2. GRB Simulations via GenAI model</h4>
             <p><strong>Overview</strong>: synthetic GRBs produced through a generative AI model that captures diverse temporal, spectral, and morphological patterns beyond those present in standard simulations.</p>
-            <p class="muted">Intended use: ideal for expanding the training domain, stress-testing model generalisation, and exploring rare or unconventional burst signatures.</p>
+            <p class="muted">Intended use: case study for a new GenAI tool which aims at providing a validate alternative for the simulation of the GRBs without Fermitools.</p>
           <h5 class="visually-hidden">Primary files</h5>
             <div class="file-strip" aria-label="Primary files">
               <div class="file-item">
@@ -489,14 +489,14 @@
         <ul class="pub-list">
           <li class="pub-item" data-kind="diagrams" data-status="soon">
             <div class="pub-head">
-              <span class="pub-title"><a href="/resources/diagrams/fermitools_pipeline.pdf" target="_blank" rel="noopener">FermiTools Pipeline (v1, PDF)</a></span>
+              <span class="pub-title"><a href="/resources/diagrams/fermitools_pipeline.pdf" target="_blank" rel="noopener">Fermitools Pipeline (v1, PDF)</a></span>
               <span class="pub-state" aria-label="Status: soon"></span>
             </div>
             <ul class="pub-meta">
               <li><span class="label">Format:</span> PDF diagram</li>
               <li><span class="label">Version:</span> v1</li>
             </ul>
-            <p class="muted">FermiTools pipeline for simulation and labelling.</p>
+            <p class="muted">Fermitools pipeline for simulation and labelling.</p>
           </li>
 
           <li class="pub-item" data-kind="diagrams" data-status="soon">

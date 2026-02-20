@@ -693,6 +693,7 @@ body.resources-page .pub-item[data-status="submitted"]    .pub-state{ background
 body.resources-page .pub-item[data-status="under-review"] .pub-state{ background:#f3e8ff; border-color:var(--pub-review);   color:#5b21b6; }
 body.resources-page .pub-item[data-status="accepted"]     .pub-state{ background:#e9f7ef; border-color:var(--pub-accept);   color:#065f46; }
 body.resources-page .pub-item[data-status="published"]    .pub-state{ background:#e8f5eb; border-color:var(--pub-publish);  color:#065f46; }
+body.resources-page .pub-item[data-status="available"]    .pub-state{ background:#e8f5eb; border-color:var(--pub-publish);  color:#065f46; }
 body.resources-page .pub-item[data-status="preprint"]     .pub-state{ background:#e6f7fb; border-color:var(--pub-preprint); color:#0c4a6e; }
 body.resources-page .pub-item[data-status="wip"]          .pub-state{ background:#eef2f7; border-color:var(--pub-wip);      color:#334155; }
 body.resources-page .pub-item[data-status="planned"]      .pub-state{ background:#eef2f7; border-color:#cbd5e1;             color:#334155; }

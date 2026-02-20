@@ -1,23 +1,23 @@
-Column,Type,Unit,Allowed_Range,Description,Notes
-ENERGY,float32,GeV,"30-300000","Reconstructed photon energy from detector response","Primary observable for spectral analysis"
-RA,float32,degrees,"0-360","Right Ascension in equatorial coordinates","Celestial longitude coordinate"
-DEC,float32,degrees,"-90-90","Declination in equatorial coordinates","Celestial latitude coordinate"
-L,float32,degrees,"0-360","Galactic longitude","Coordinate in Galactic reference frame"
-B,float32,degrees,"-90-90","Galactic latitude","Coordinate in Galactic reference frame"
-THETA,float32,degrees,"0-360","Off-axis angle from pointing direction","Distance from telescope pointing center"
-PHI,float32,degrees,"0-360","Azimuthal angle around pointing direction","Rotation angle around telescope axis"
-ZENITH_ANGLE,float32,degrees,"0-180","Zenith angle of observation (0 = overhead)","Angle from vertical"
-EARTH_AZIMUTH_ANGLE,float32,degrees,"0-360","Azimuthal angle relative to Earth","Observatory reference frame angle"
-TIME,float64,seconds,">0","Event time in Mission Elapsed Time (MET) format","Unix timestamp reference epoch mission-specific"
-EVENT_ID,int32,n/a,"≥0","Unique identifier for each event within simulation","Sequential event numbering"
-RUN_ID,int32,n/a,"≥0","Identifier for the simulation run","Groups events from same simulation"
-RECON_VERSION,int16,n/a,"≥0","Version number of reconstruction algorithm used","Algorithm version tracking"
-CONVERSION_TYPE,int16,n/a,'"{0,1}”','"Photon conversion mechanism (0=front,1=back)”',"Detector-specific conversion location"
-LIVETIME,float64,seconds,">0","Effective observation time accounting for dead time","Used for rate calculations"
-MC_SRC_ID,int32,n/a,"≥0","Monte Carlo source identifier","Links to simulation input parameters"
-MCENERGY,float32,GeV,">0","True photon energy from Monte Carlo simulation","Ground truth energy for validation"
-CONT_ANG,float64,degrees,"≥0","Angular separation between reconstructed and true position","Measure of angular reconstruction quality"
-WEIGHT,float64,n/a,">0","Statistical weight for combining events in analysis","Accounts for acceptance and efficiency"
-GTI,int64,n/a,'"{0,1}”','"Good Time Interval flag (1=usable,0=excluded)”',"Data quality flag"
-probability,int64,n/a,"0-1”,'"Event quality flag (1=high quality,0=low quality)"',"Selection quality indicator"
-GRB,string,n/a,"GRB_Simulated_*","Source identifier matching filename","Links event to parent GRB simulation"
+Column,Type,Unit,Allowed/Range,Description
+ENERGY,float,GeV,30 to 300000,Reconstructed photon energy from detector response
+RA,float,degrees,0 to 360,Right Ascension in J2000 equatorial coordinates
+DEC,float,degrees,-90 to 90,Declination in J2000 equatorial coordinates
+L,float,degrees,0 to 360,Galactic longitude
+B,float,degrees,-90 to 90,Galactic latitude
+THETA,float,degrees,≥0,Off-axis angle from pointing direction
+PHI,float,degrees,0 to 360,Azimuthal angle around pointing direction
+ZENITH_ANGLE,float,degrees,0 to 180,Zenith angle of observation (0 = overhead)
+EARTH_AZIMUTH_ANGLE,float,degrees,0 to 360,Azimuthal angle relative to Earth
+TIME,float,seconds,≥0,Event time in Mission Elapsed Time (MET) format
+EVENT_ID,int,n/a,≥0,Unique identifier for each event within simulation
+RUN_ID,int,n/a,≥0,Identifier for the simulation run
+RECON_VERSION,int,n/a,≥0,Version number of reconstruction algorithm used
+CONVERSION_TYPE,int,n/a,"{0, 1}","Photon conversion mechanism (0=front, 1=back)"
+LIVETIME,float,seconds,>0,Effective observation time accounting for dead time
+MC_SRC_ID,int,n/a,≥0,Monte Carlo source identifier
+MCENERGY,float,GeV,>0,True photon energy from Monte Carlo simulation
+CONT_ANG,float,degrees,≥0,Angular separation between reconstructed and true position
+WEIGHT,float,n/a,>0,Statistical weight for combining events in analysis
+GTI,int,n/a,"{0, 1}","Good Time Interval flag (1=usable, 0=excluded)"
+probability,int,n/a,"{0, 1}","Event quality flag (1=high quality, 0=low quality)"
+GRB,string,n/a,Format: GRB_Simulated_*,Source identifier matching filename

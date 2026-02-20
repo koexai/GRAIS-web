@@ -2,9 +2,9 @@
   "title": "Gamma Ray Burst Photon-Level Dataset",
   "creators": [
     {
-      "name": "Luca Naso",
-      "affiliation": "Koexai S.r.l.",
-      "role": "CEO and Founder"
+      "name": "Koexai S.r.l.",
+      "affiliation": "Koexai S.r.l., Catania, Italy",
+      "role": "Data Producer"
     }
   ],
   "version": "1.0.0",
@@ -15,51 +15,36 @@
   },
   "identifier": {
     "type": "internal",
-    "value": "Koexai S.r.l."
+    "value": "KOEXAI-GRB-A2-v1.0"
   },
   "domain": "Astrophysics - High Energy Astrophysical Phenomena",
-  "purpose": "Enable detailed temporal and spectral analysis of Gamma Ray Bursts at the photon level for research in high-energy astrophysics, transient phenomena characterisation, and understanding GRB emission mechanisms.",
+  "purpose": "A2 dataset is specifically created to build a large sample of simulated gamma-ray bursts generated with a GenAI model.",
   "provenance": {
-    "sources": "Photon event data generated from GRB observations or simulations",
+    "sources": "Photon event data generated from GRB simulations via Generative AI models trained on Fermi-LAT data.",
     "processing": "Photon events extracted with associated arrival times (relative to trigger) and energies. Data cleaned to remove spurious detections and calibrated for energy measurements.",
-    "derivations": "Time coordinates referenced to GRB trigger time (t=0). Energy values calibrated and expressed in keV."
+    "derivations": "Derived quantities include the reconstructed photon time and energy."
   },
   "structure": {
     "formats": ["CSV"],
     "encoding": "UTF-8",
-    "conventions": "TIME column represents seconds since GRB trigger (t=0). ENERGY values in kiloelectronvolts (keV). Each row represents one detected photon. Rows are grouped by origin_GRB identifier.",
-    "relationships": "Photons are grouped by origin_GRB identifier, allowing analysis of individual GRB events. Multiple photons share the same origin_GRB value.",
     "dataDictionaryLocation": "dictionary.csv"
   },
   "quality": {
-    "validation": "Data validated for temporal ordering within each GRB event. Energy values checked for physical plausibility (positive values). GRB identifiers verified for consistency.",
-    "metrics": {
-      "totalPhotons": 1471344,
-      "totalEvents": "Multiple GRB events identified by unique origin_GRB values",
-      "energyRange": "Positive values in MeV representing detected photon energies",
-      "temporalRange": "Times relative to trigger, starting from t=0"
-    },
+    "validation": "Events were generated using a trained Generative AI model and validated through statistical consistency checks against the reference simulated dataset. Data integrity verified through CSV file validation and statistical checks on key parameters.",
     "limitations": [
-      "Data represents photon-level information without additional metadata about instrumental response or background",
-      "Energy calibration accuracy depends on detector characteristics not explicitly encoded in this dataset",
-      "Temporal resolution limited by detector timing capabilities",
-      "No information on photon detection efficiency or selection criteria included"
+    "The dataset reflects the statistical properties learned from the training simulations and may not capture rare or extreme physical scenarios outside that domain",
+    "Temporal and spectral features are model-dependent and may inherit biases from the training dataset",
+    "Instrumental systematics and detailed detector response effects are not explicitly simulated unless encoded in the training data"
     ],
-    "usageGuidance": "Suitable for time-resolved spectroscopy, light curve construction, timing analysis, and spectral studies of GRBs. Users should consider detector properties and potential selection effects when interpreting results. Recommended for research requiring photon-level temporal and spectral information."
+    "usageGuidance": "This dataset is recommended for algorithm development, pipeline testing, and machine learning training." 
   },
   "access": {
     "licence": "CC-BY-4.0",
-    "reuseGuidance": "Users must provide appropriate attribution when using or redistributing this dataset. No additional restrictions apply beyond proper citation.",
+    "reuseGuidance": "Users must cite this dataset when using it in publications or derivative works. Commercial use is permitted. Modified versions should clearly indicate changes from the original dataset.",
     "contact": {
-      "name": "Luca Naso"
-      "email": "info@koexai.com",
-      "role": "CEO and Founder"
+      "name": "Koexai S.r.l.",
+      "email": "info@koexai.com"
     },
-    "projectLink": "https://www.koexai.com"
-  },
-  "fileInfo": {
-    "mainFile": "A2_GRBs_generated.csv",
-    "totalRows": 1471344,
-    "columns": 3
+    "projectLink": "https://grais.koexai.com"
   }
 }

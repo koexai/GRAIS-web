@@ -1,0 +1,7 @@
+Column,Type,Unit,Allowed/Range,Description
+time,float,seconds,≥0,Initial time of the GRB candidate in Mission Elapsed Time (MET) format
+pixel,int,n/a,≥0,Pixel of the GRB candidate
+ra,float,degrees,0 to 360,Right Ascension in J2000 equatorial coordinates of the GRB candidate
+dec,float,degrees,-90 to 90,Declination in J2000 equatorial coordinates of the GRB candidate
+prob,float,n/a,0 to 1,Probability for that candidate to be a GRB after CNN and DeepSet inference
+prob_stage2,float,n/a,0 to 1,Probability for that candidate to be a GRB after CNN inference

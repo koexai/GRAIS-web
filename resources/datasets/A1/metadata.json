@@ -17,71 +17,34 @@
     "type": "Internal",
     "value": "KOEXAI-GRB-A1-v1.0"
   },
-  "citation": {
-    "text": "Koexai S.r.l. (2025). Simulated Gamma-Ray Burst Event Dataset A1 (Version 1.0.0). KOEXAI-GRB-A1-v1.0",
-    "bibtex": "@dataset{koexai_grb_a1_2025,\n  author = {Koexai S.r.l.},\n  title = {Simulated Gamma-Ray Burst Event Dataset A1},\n  year = {2025},\n  version = {1.0.0},\n  publisher = {Koexai S.r.l.},\n  identifier = {KOEXAI-GRB-A1-v1.0}\n}"
-  },
-  "abstract": "This dataset contains simulated gamma-ray burst (GRB) event data generated for astrophysical research and analysis. The dataset comprises 100 HDF5 files containing approximately 171558 individual gamma-ray detection events from simulated GRB sources. Each event includes reconstructed energy, celestial coordinates, angular parameters, timing information, and Monte Carlo truth data. The simulations represent filtered event data from gamma-ray detectors, suitable for developing and testing analysis pipelines for high-energy astrophysics research.",
-  "keywords": [
-    "gamma-ray bursts",
-    "Fermi Tools",
-    "GRB",
-    "astrophysics simulation",
-    "high-energy astrophysics",
-    "Monte Carlo",
-    "event reconstruction",
-    "HDF5",
-    "celestial coordinates",
-    "gamma-ray detection"
-  ],
-  "domain": "Astrophysics / High-Energy Physics",
-  "purpose": "This dataset is intended for developing and validating Fermi Tools pipeline for gamma-ray burst simulation.",
+  "domain": "Astrophysics - High Energy Astrophysical Phenomena",
+  "purpose": "A1 dataset is specifically created to build a large sample of simulated gamma-ray bursts generated with gtobssim. Its primary purpose is to provide a controlled and statistically significant set of GRB events for training Generative AI models and developing anomaly detection methods.",
   "provenance": {
-    "sources": "Monte Carlo simulations of gamma-ray burst events using standard astrophysical simulation frameworks by Fermi Tools",
+    "sources": "Monte Carlo simulations of gamma-ray burst events using standard astrophysical simulation frameworks.",
     "processing": "Events were generated through Monte Carlo simulations, then filtered based on quality criteria including reconstruction quality, angular separation, and energy thresholds. The filtering process removed low-quality events and retained high-confidence detections suitable for scientific analysis.",
-    "derivations": "Derived quantities include reconstructed energy (ENERGY), angular positions (RA, DEC), and event weights (WEIGHT)."
+    "derivations": "Derived quantities include the Monte Carlo source identifier (MC_SRC_ID) and the true photon energy from the Monte Carlo simulation (MCENERGY). The containment angle (CONT_ANG) and the event weight (WEIGHT) are instead computed from the instrument Point Spread Function (PSF), characterizing the angular reconstruction performance."
   },
   "structure": {
     "formats": ["HDF5"],
-    "encoding": "Binary HDF5 format with PyTables structure",
-    "conventions": "Times are in MET (Mission Elapsed Time) format as float64 Unix timestamps. Missing or invalid events are indicated by empty HDF5 groups. Coordinate systems: RA/DEC in degrees, Galactic coordinates L/B in degrees, angles in degrees.",
-    "relationships": "Each HDF5 file represents events from a single simulated GRB source. Files are independent and can be processed separately. The 'GRB' column provides the source identifier events to their parent simulation.",
-    "numberOfFiles": 100,
-    "totalEvents": 171558,
-    "fileNamingConvention": "GRB_Simulated_<ID>_filtered.hdf5, where ID is a unique numeric identifier"
+    "encoding": "UTF-8",
+    "dataDictionaryLocation": "dictionary.csv"
+  },
+  "quality": {
+    "validation": "Events underwent automated quality filtering based on reconstruction parameters. Data integrity verified through HDF5 file validation and statistical checks on key parameters.",
+    "limitations": [
+      "Event statistics vary significantly between simulations due to different source parameters and observing conditions",
+      "Coordinate precision limited by reconstruction algorithms used in simulation",
+      "No instrumental background events are included in this filtered dataset"
+    ],
+    "usageGuidance": "This dataset is recommended for algorithm development, pipeline testing, and machine learning training." 
   },
   "access": {
     "licence": "CC-BY-4.0",
     "reuseGuidance": "Users must cite this dataset when using it in publications or derivative works. Commercial use is permitted. Modified versions should clearly indicate changes from the original dataset.",
     "contact": {
       "name": "Koexai S.r.l.",
-      "email": "info@koexai.com",
-      "role": "Dataset maintainer"
+      "email": "info@koexai.com"
     },
-    "projectLink": "https://www.koexai.com"
-  },
-  "dataTypes": {
-    "ENERGY": "Reconstructed photon energy in GeV",
-    "RA": "Right Ascension in degrees",
-    "DEC": "Declination in degrees",
-    "L": "Galactic longitude in degrees",
-    "B": "Galactic latitude in degrees",
-    "THETA": "Off-axis angle in degrees",
-    "PHI": "Azimuthal angle in degrees",
-    "ZENITH_ANGLE": "Zenith angle of observation in degrees",
-    "EARTH_AZIMUTH_ANGLE": "Earth azimuth angle in degrees",
-    "TIME": "Event time in Mission Elapsed Time seconds",
-    "EVENT_ID": "Unique event identifier",
-    "RUN_ID": "Simulation run identifier",
-    "RECON_VERSION": "Reconstruction algorithm version",
-    "CONVERSION_TYPE": "Photon conversion type",
-    "LIVETIME": "Effective observation livetime in seconds",
-    "MC_SRC_ID": "Monte Carlo source identifier",
-    "MCENERGY": "True (Monte Carlo) photon energy in GeV",
-    "CONT_ANG": "Containment angle between reconstructed and true position in degrees",
-    "WEIGHT": "Event statistical weight",
-    "GTI": "Good Time Interval flag",
-    "probability": "Event quality probability",
-    "GRB": "Source identifier string"
+    "projectLink": "https://grais.koexai.com"
   }
 }

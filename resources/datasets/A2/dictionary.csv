@@ -1,4 +1,4 @@
 Column,Type,Unit,Allowed/Range,Description
-origin_GRB,string,n/a,Format: GEN_XXXXX,Unique identifier for the Gamma Ray Burst source event from which the photon was detected
-TIME,float,seconds,>= 0,Time of arrival of the detected photon relative to the GRB trigger time (t=0). Represents the temporal coordinate of each photon detection.
-ENERGY,float,MeV,30 - 300000,Energy of the detected photon measured in kiloelectronvolts (keV). Represents the photon energy at detection.
+origin_GRB,string,n/a,Format: GEN_*,Unique identifier for the Gamma Ray Burst source event from which the photon was detected
+TIME,float,seconds,≥0,Time of arrival of the detected photon relative to the GRB trigger time. Represents the temporal coordinate of each photon detection
+ENERGY,float,MeV,30 to 300000,Energy of the detected photon measured in kiloelectronvolts. Represents the photon energy at detection

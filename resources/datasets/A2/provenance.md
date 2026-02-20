@@ -1,107 +1,141 @@
-# Provenance and Methods
+# Provenance and Methods Documentation
+## Simulated Gamma-Ray Burst Event Dataset A2
 
-## Data Acquisition
+**Version:** 1.0.0  
+**Date:** 2025-11-30  
+**Organization:** Koexai S.r.l.
 
-### Source
-This dataset contains photon-level event data from Gamma Ray Burst (GRB) detections. Each record represents an individual photon detected during a GRB observation, capturing the fundamental quantum events that constitute the observed high-energy emission.
+---
 
-### Temporal Reference System
-All photon arrival times (TIME column) are referenced to the GRB trigger time, defined as t=0 seconds. This trigger time represents the moment when the GRB was first detected and the observation sequence initiated. The temporal coordinates are expressed in seconds elapsed since this reference point.
+## 1. Data Acquisition
 
-### Energy Measurements
-Photon energies (ENERGY column) are measured in megaelectronvolts (MeV), representing the energy of each detected photon at the point of detection. Energy calibration follows standard high-energy astrophysics conventions for converting detector channel measurements to physical energy units.
+### 1.1 Source Description
 
-### Event Identification
-Each GRB event is identified by a unique origin_GRB identifier following the format "GEN_XXXXX", where XXXXX represents a sequential event number. This identifier groups all photons detected from the same GRB source.
+This dataset consists of synthetic gamma-ray burst events generated using a trained Generative Artificial Intelligence model.
 
-## Data Processing
+### 1.2 Simulation Framework
 
-### Extraction and Formatting
-1. **Photon Event Extraction**: Individual photon events extracted from observational data or simulation outputs
-2. **Time Calibration**: Arrival times calculated relative to GRB trigger time (t=0)
-3. **Energy Calibration**: Raw detector channels converted to physical energy units (MeV)
-4. **Event Association**: Photons assigned to their respective GRB source events via origin_GRB identifier
+**Simulation Type:** Statistically learned temporal and spectral patterns
 
-### Quality Control Steps
-1. **Temporal Ordering**: Verification that TIME values are non-negative and properly ordered within each GRB event
-2. **Energy Validation**: Confirmation that ENERGY values are positive and within physically plausible ranges
-3. **Identifier Consistency**: Verification of origin_GRB format and uniqueness across events
-4. **Completeness Check**: Validation that all required columns are present for each photon record
+**Source Parameters:**
+- Number of simulated GRBs: 5000
+- Source naming: Sequential numbering (GEN_1 through GEN_5000)
+- Source positions: Distributed across the celestial sphere
+- Energy range: Approximately 30 MeV to 300 GeV
 
-### Data Cleaning
-- Removal of spurious detections or instrumental artefacts
-- Validation of photon event timestamps for consistency
-- Energy calibration applied to ensure accurate spectral measurements
-- Filtering applied to retain high-quality photon events
+---
 
-## Derivations and Transformations
+## 2. Data Processing Pipeline
 
-### Time Coordinate System
-The TIME column represents derived values calculated as:
+### 2.1 Raw Simulation Output
+
+**Initial Data Products:**
+- Photon arrival time
+- Reconstructed photon energy (ENERGY)
+
+### 2.2 2.3 Generation Process
+
+The generative model was trained to reproduce the statistical distributions of:
+- GRB temporal profiles
+- Energy spectra
+During inference, the trained model produces synthetic event samples by sampling from the learned latent representation.
+No explicit detector response simulation (e.g., IRFs or spacecraft pointing history) is applied during generation unless implicitly encoded through training data.
+
+### 2.3 Data Organization
+
+- One csv file created per simulated GRB source
+- Filename convention: `GEN_*.csv`
+
+---
+
+## 3. Validation and Quality Assurance
+
+### 3.1 Pre-Release Checks:
+
+1. File integrity verification
+2. Schema validation for all required fields
+3. Data type consistency checks
+4. Range validation for physical quantities
+
+### 3.2 Distribution Checks
+
+- Energy spectrum: Power-law or broken power-law shape expected
+- Time distributions: Consistency with GRB temporal profiles
+
+## 4. Known Issues and Limitations
+
+### 4.1 Model-Dependent Biases
+
+The dataset reflects only patterns present in the training data. Rare or extreme physical scenarios may not be reproduced. Systematic detector effects are only indirectly encoded via training data.
+
+### 4.2 Physical Fidelity
+
+- No explicit instrument response recalculation
+- No independent background modeling
+- Temporal fine-structure limited by model capacity
+- Systematic uncertainties may be simplified compared to real detectors
+- Detector response based on nominal performance models
+- Simplified background modeling
+- Idealized trigger logic
+
+---
+
+## 5. Data Processing
+
+**Core Libraries:**
+- Python 3.7+
+- NumPy (array operations)
+- pandas (data manipulation)
+- PyTables / h5py (HDF5 I/O)
+- Astropy (coordinate transformations)
+
+---
+
+## 6. Data Lineage
+
+### 6.1 Processing History
+
 ```
-TIME = t_detection - t_trigger
+Training Data Preparation
+            ↓
+GenAI Model Training
+            ↓
+Model Inference / Sampling
+            ↓
+Post-Generation Validation
+            ↓
+Dataset A2 (this release)
 ```
-where `t_detection` is the absolute detection time and `t_trigger` is the GRB trigger time.
 
-### Energy Scale
-Energy values represent calibrated measurements accounting for:
-- Detector response characteristics
-- Energy-dependent detection efficiency
-- Channel-to-energy conversion functions
+### 6.2 Traceability
 
-## Software and Tools
+**Event Tracking:**
+- origin_GRB: Unique identifier for the Gamma Ray Burst source event from which the photon was detected
 
-Data processing performed using standard astrophysical analysis tools and libraries:
-- **Python 3.x**: Primary data processing environment
-- **NumPy**: Numerical computations and array operations
-- **Pandas**: Data manipulation and CSV handling
+**Provenance Metadata:**
+- File creation dates: 2025-12-04
+- Processing date: 2025-12-04
+- Dataset release date: 2025-12-05
+- Version: 1.0.0
 
-## Data Volume and Statistics
+---
 
-- **Total photons**: 1,471,344 individual photon detections
-- **GRB events**: Multiple distinct GRB sources identified by unique origin_GRB values
-- **Format**: CSV (Comma-Separated Values) with UTF-8 encoding
-- **File structure**: Header row followed by data rows, one photon per row
+## 7. Contact and Support
 
-## Validation and Quality Assurance
+**Technical Questions:**
+Koexai S.r.l.  
+Email: info@koexai.com  
+Website: https://www.grais.koexai.com
 
-### Automated Checks
-- Schema validation ensuring all rows contain exactly three columns
-- Type checking: string for origin_GRB, float for TIME and ENERGY
-- Range validation: TIME ≥ 0, ENERGY > 0
-- Identifier format verification: origin_GRB matches expected pattern
+**Data Requests:**
+For access to raw simulation output, alternative filtering criteria, or custom simulations, please contact the data provider.
 
-### Manual Review
-Sample inspection performed to verify:
-- Physical plausibility of time and energy distributions
-- Appropriate temporal coverage for each GRB event
-- Consistency of photon grouping by origin_GRB
+**Bug Reports:**
+If you identify data quality issues or inconsistencies, please report them to info@koexai.com with:
+- File name(s) affected
+- Description of the issue
+- Steps to reproduce (if applicable)
 
-## Known Limitations and Caveats
-
-1. **Detector Properties**: This dataset does not include explicit information about detector characteristics, response functions, or background rates
-2. **Selection Effects**: Potential selection biases from trigger algorithms, energy thresholds, or temporal windows are not explicitly documented
-3. **Calibration Uncertainties**: Energy calibration accuracy depends on instrumental factors not encoded in this dataset
-4. **Completeness**: The dataset may not represent complete coverage of all detected photons if quality filters were applied
-5. **Temporal Resolution**: Time measurement precision limited by detector timing capabilities
-
-## Reproducibility Notes
-
-To reproduce analyses using this dataset:
-1. Load the CSV file preserving all three columns
-2. Group photons by origin_GRB to analyse individual GRB events
-3. Apply appropriate binning for light curves or spectral analyses
-4. Consider detector-specific response functions when performing spectral fits
-5. Account for potential background contamination in timing analyses
-
-## Updates and Versioning
-
-- **Version 1.0.0** (2025-11-30): Initial release
-- Future updates may include additional GRB events or refined calibrations
-- Users should check metadata.json for current version information
-
-## Contact for Technical Details
-
-For questions regarding data provenance, processing methods, or quality assessment:
-- **Contact**: Luca Naso, Koexai S.r.l.
-- **Email**: info@koexai.com
+**Document Version:** 1.0  
+**Last Updated:** 2025-11-30  
+**Authors:** Koexai S.r.l. Data Team

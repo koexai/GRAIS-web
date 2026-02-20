@@ -523,6 +523,7 @@ window.addEventListener('DOMContentLoaded', function () {
     (function(){
       // Dynamic chip labels for publications
       const MAP = {
+        'available': 'Available',
         'in-prep': 'In prep',
         'submitted': 'Submitted',
         'under-review': 'Under review',
